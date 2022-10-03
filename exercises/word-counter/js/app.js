@@ -6,39 +6,40 @@
 // 🤖: You will need to utilize the split method to get the words count.
 
 class WordCounter {
-  constructor(inputText) {
-      this.inputText = inputText;
-      this.inputText.addEventListener('#input', () => {
-          this.count();
-      });
-  }
-  count() {
-      let wordStat = this.getWordStat(this.inputText.value.trim());
-      this.emitEvent(wordStat);
-  }
-
-  emitEvent(wordStat) {
-      let countEvent = new CustomEvent('#count', {
-          bubbles: true,
-          cancelable: true,
-          detail: {
-              wordStat
-          }
-      });
-      this.inputText.dispatchEvent(countEvent);
-
-  }
-  getWordStat(str) {
-      let matches = str.match(/\s+/g);
-      return {
-          characters: str.length,
-          words: matches ? matches.length : 0,
-      };
-  }
+constructor(inputText) {
+    this.inputText = inputText;
+    if (inputText){
+    this.inputText.addEventListener('input', () => {
+        this.count();
+    })};
+}
+count() {
+    let wordStat = this.getWordStat(this.inputText.value.trim());
+    this.emitEvent(wordStat);
 }
 
-const inputText = document.querySelector('#text');
-const statElem = document.querySelector('#stat');
+emitEvent(wordStat) {
+    let countEvent = new CustomEvent('count', {
+        bubbles: true,
+        cancelable: true,
+        detail: {
+            wordStat
+        }
+    });
+    this.inputText.dispatchEvent(countEvent);
+
+}
+getWordStat(str) {
+    let matches = str.match(/\s+/g);
+    return {
+        characters: str.length,
+        words: matches ? matches.length : 0,
+    };
+}
+}
+
+const inputText = document.querySelector('text');
+const statElem = document.querySelector('stat');
 
 new WordCounter(inputText);
 
@@ -48,4 +49,4 @@ const render = (event) => {
         and <span class="highlight">${event.detail.wordStat.characters} characters</span>.</p>`;
 }
 
-inputText.addEventListener('count', render);
+this.inputText.addEventListener('count', render);
